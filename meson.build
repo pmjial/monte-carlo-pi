@@ -16,4 +16,14 @@ exe = executable(
   install : true,
 )
 
-test('basic', exe)
+test('cli no args fails', exe, should_fail : true)
+test('cli invalid type fails', exe, args : ['invalid', '1000', '1'], should_fail : true)
+test('cli single_thread', exe, args : ['single_thread', '100000', '1'])
+test('cli multi_thread', exe, args : ['multi_thread', '100000', '1', '4'])
+
+test_exe = executable(
+  'test_pi',
+  'tests/test_pi.cpp',
+)
+
+test('approximate_pi', test_exe)
